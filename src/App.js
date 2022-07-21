@@ -5,43 +5,100 @@ import Home from './pages/Home';
 import New from './pages/New';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
-import MyButton from './components/MyButton';
-import MyHeader from './components/MyHeader';
+import React, { useReducer, useRef } from 'react';
+
+
+const reducer = (state,action)=>{
+  let newState=[];
+
+  switch(action.type){
+    case 'INIT': {
+      return action.data
+    }
+    case 'CREATE': {
+      const newItem= {
+        ...action.data
+      }
+      newState=[newItem,...state];
+      break;
+    }
+  
+    case 'REMOVE':{
+      newState=state.filter((it)=>it.id!==action.targetId)
+      break;
+    }
+
+    case 'EDIT':{
+      newState= state.map((it)=>it.id === action.data.id ? {...action.data}: it)
+      break;
+    }
+
+    default:
+      return newState;
+  }
+}
+
+export const DiaryStateContext= React.createContext();
+export const DiaryDispatchContext= React.createContext();
+
 
 
 function App() {
+
+  const [data,dispatch] = useReducer(reducer,[]);
+
+  const dataId = useRef(1);
+
+  //CREATE
+
+  const onCreate = (date,content,emotion) =>{
+    dispatch({
+      type:'CREATE',
+      data:{
+        id: dataId.current,
+        data: new Date(date).getTime(),
+        content,
+        emotion,
+      }
+    });
+    dataId+=1
+
+  }
+
+  //REMOVE
+
+  const onRemove= (targetId) => {
+    dispatch({type:'REMOVE', targetId})
+  }
+
+  //EDIT
+
+  const onEdit = (targetId,date,content,emotion) => {
+    dispatch({type:'EDIT',data:{
+      id:targetId,
+      date: new Date(date).getTime(),
+      content,
+      emotion,
+    }})
+
+  }
+
   return (
     // BrowserRouter 로 감싼다 -> url과 mapping 될 수 있다
-    <BrowserRouter>
-
-    {/* 컴포넌트 자체도 전달이 가능함 */}
-    <MyHeader headText={"APP"} 
-    leftChild={<MyButton text={'예시 버튼'} onClick={()=>alert('버튼 클릭')}/>}
-    rightChild={<MyButton text={'버튼 2'} type='positive'/>}
-    
-    />
-    
-
-    
-    <div className="App">
-      <h2>
-        This is APP Page
-      </h2>
-
-      {/* url이 바뀌면 Routes 안에 있는 요소들만 변경됨 */}
-      <MyButton text={'버튼'} onClick={()=>alert("클릭됨")} type={"positive"}/>
-
-
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/new' element={<New/>}/>
-        <Route path='/edit' element={<Edit/>}/>
-        <Route path='/diary/:id' element={<Diary/>}/>
-      </Routes>
-      
-    </div>
-
-    </BrowserRouter>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={{onCreate, onRemove, onEdit}}>
+        <BrowserRouter> 
+          <div className="App">
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path='/new' element={<New/>}/>
+              <Route path='/edit' element={<Edit/>}/>
+              <Route path='/diary/:id' element={<Diary/>}/>
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 
