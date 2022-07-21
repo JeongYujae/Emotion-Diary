@@ -103,3 +103,37 @@ header .head_btn_right {
 header button {
   font-family: 'Nanum Pen Script';
 }
+
+/* DiaryList */
+
+.DiaryList .menu_wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.DiaryList .menu_wrapper .right_col {
+  flex-grow: 1;
+}
+
+.DiaryList .menu_wrapper .right_col button {
+  width: 100%;
+}
+
+.DiaryList .ControlMenu {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e2e2e2;
+  
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  cursor: pointer;
+  font-family: "Nanum Pen Script";
+  font-size: 17px;
+}

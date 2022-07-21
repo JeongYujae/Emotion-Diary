@@ -7,7 +7,6 @@ import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import React, { useReducer, useRef } from 'react';
 
-
 const reducer = (state,action)=>{
   let newState=[];
 
@@ -41,11 +40,36 @@ const reducer = (state,action)=>{
 export const DiaryStateContext= React.createContext();
 export const DiaryDispatchContext= React.createContext();
 
+const dummyData= [
+  {
+    id:1,
+    emotion:3,
+    content:'1번 일기',
+    date: new Date().getTime()
+  },
 
+  {
+    id:2,
+    emotion:4,
+    content:'2번 일기',
+    date: new Date().getTime()+1
+  },
+  {id:3,
+  emotion:1,
+  content:'3번 일기',
+  date: new Date().getTime()+2
+  },
+  {id:4,
+    emotion:2,
+    content:'4번 일기',
+    date: new Date().getTime()+1000000000000
+
+  }
+]
 
 function App() {
 
-  const [data,dispatch] = useReducer(reducer,[]);
+  const [data,dispatch] = useReducer(reducer,dummyData);
 
   const dataId = useRef(1);
 
