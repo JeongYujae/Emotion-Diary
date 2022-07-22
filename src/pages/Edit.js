@@ -1,34 +1,45 @@
-import React from "react";
-import {useSearchParams, useNavigate} from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { DiaryStateContext } from "../App";
+import DiaryEditor from "../components/DiaryEditor";
+
 
 const Edit = () => {
 
-    //Query String 처리 (주소 뒤에 있는 ? id 나 mode)
-    const [searchParams, setSearchParams]=useSearchParams();
+    //받아온 데이터를 state 값으로 활용할거야
 
-    const id =searchParams.get('id')
+    const [originData, setOriginData]= useState();
 
-    const mode = searchParams.get('mode')
+    const navigate=useNavigate()
 
+    //edit 할 id 값 가져오고
+    const {id} = useParams();
 
-    //페이지를 이동시키는 함수 제공
-    //Link 태그처럼 클릭 안해도 강제로 넘길 수 있다
-    const navigate= useNavigate();
+    //원본 데이터 받아오기
+    const diaryList= useContext(DiaryStateContext);
 
+    //id 와 diaryList가 변경될 때만 
+    useEffect(()=>{
+        if (diaryList.length  >=1 ) {
+            const targetDiary = diaryList.find((it)=> parseInt(it.id) === parseInt(id))
+            console.log(targetDiary)
+
+        if (targetDiary) {
+            setOriginData(targetDiary)
+
+        }
+        else {
+            navigate('/', {replace:true})
+        }
+        }
+
+        
+
+    }, [id, diaryList])
 
     return(
         <div>
-            Edit.js
-            {/* 쿼리 스트링 자체를 실시간으로 변경시켜 줄 수 있다 */}
-            <button onClick={()=>setSearchParams({mode:'dark'})}>모드 바꾸기</button>
-
-
-            <button onClick={()=>navigate("/home")}>홈으로 이동하기</button>
-
-            <button onClick={()=>navigate(-1)}>뒤로 가기</button>
-
-
-            
+            {originData && <DiaryEditor isEdit={true} originData={originData}/>}
 
         </div>
     )
