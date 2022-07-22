@@ -35,6 +35,8 @@ const reducer = (state,action)=>{
     default:
       return newState;
   }
+  return newState;
+  // newState를 반환해주어야 새로운 리스트에 반영이 된다
 }
 
 export const DiaryStateContext= React.createContext();
@@ -71,7 +73,7 @@ function App() {
 
   const [data,dispatch] = useReducer(reducer,dummyData);
 
-  const dataId = useRef(1);
+  const dataId = useRef(0);
 
   //CREATE
 
@@ -80,12 +82,12 @@ function App() {
       type:'CREATE',
       data:{
         id: dataId.current,
-        data: new Date(date).getTime(),
+        date: new Date(date).getTime(),
         content,
         emotion,
-      }
+      },
     });
-    dataId+=1
+    dataId.current+=1
 
   }
 

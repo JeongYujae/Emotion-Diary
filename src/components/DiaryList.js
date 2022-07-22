@@ -3,19 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DiaryItem from "./DiaryItem";
 import MyButton from "./MyButton";
 
-const ControlMenu = ({value, onChange, optionList}) => {
-    return(
-        <select className="ControlMenu" value={value} onChange={(e)=>onChange(e.target.value)}>
-            {optionList.map((it,idx)=> (
-            <option value={it.value} key={idx}>
-                {it.name}
-            </option>
-                
-                ))}
 
-        </select>
-    )
-}
 
 const filterOptionList = [
     {value:"all", name:"매일"},
@@ -30,6 +18,24 @@ const sortOptionList = [
 ]
 
 
+const ControlMenu = ({value, onChange, optionList}) => {
+
+
+    return(
+        <select className="ControlMenu" value={value} onChange={(e)=>onChange(e.target.value)}>
+            {optionList.map((it,idx)=> (
+            <option value={it.value} key={idx}>
+                {it.name}
+            </option>
+                
+                ))}
+
+        </select>
+    )
+}
+
+
+
 const DirayList = ({diaryList}) => {
     const navigate= useNavigate()
     const [sortType,setSortType]= useState('latest')
@@ -40,10 +46,10 @@ const DirayList = ({diaryList}) => {
 
         const filterCallBack= (item) => {
             if (filter=== "good") {
-                return parseInt(item.emotion) >3
+                return parseInt(item.emotion) <=3
             }
             else {
-                return parseInt(item.emotion)<=3
+                return parseInt(item.emotion) >3
             }
 
         }
@@ -92,6 +98,7 @@ const DirayList = ({diaryList}) => {
 }
 
 DirayList.defaultProps= {
-    diaryList: []
+    diaryList: [],
 }
+
 export default DirayList

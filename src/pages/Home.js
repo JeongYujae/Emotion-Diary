@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import MyHeader from "./../components/MyHeader"
 import MyButton from "./../components/MyButton"
 import { DiaryStateContext } from "../App";
-import DirayList from "../components/DiaryList";
+import DirayList from "./../components/DiaryList";
 
 const Home = () => {
 
@@ -11,18 +11,23 @@ const Home = () => {
     const [data,setData]= useState([]);
 
     const [curDate,setCurDate]=useState(new Date())
+    const headText=`${curDate.getFullYear()}년 ${curDate.getMonth()+1}월`
+
 
     useEffect(()=>{
-        const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(),1).getTime()
+        if (diaryList.length >=1){
+        const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(),1).getTime();
 
-        const lastDay= new Date(curDate.getFullYear(), curDate.getMonth()+1,0).getTime()
+        const lastDay= new Date(curDate.getFullYear(), curDate.getMonth()+1, 0).getTime();
 
-        setData(diaryList.filter((it)=> firstDay<= it.date && it.date <= lastDay))
+        setData(
+            diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
+          );
+        }
 
-    },[diaryList, curDate])
+    }, [diaryList, curDate])
     //diaryList 가 바뀌면 다시 랜더링이 필요하기 때문
 
-    const headText=`${curDate.getFullYear()}년 ${curDate.getMonth()+1}월`
 
     const increaseMonth = () => {
         setCurDate(
@@ -48,8 +53,6 @@ const Home = () => {
 
             <DirayList diaryList={data}/>
 
-            Home.js
-            <h2>여기는 홈 입니다</h2>
         </div>
     )
 }
