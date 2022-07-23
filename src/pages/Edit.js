@@ -18,6 +18,12 @@ const Edit = () => {
     //원본 데이터 받아오기
     const diaryList= useContext(DiaryStateContext);
 
+    //제목 바꾸기
+    useEffect(()=>{
+        const titleElement= document.getElementsByTagName('title')[0]
+        titleElement.innerHTML= `${id}번째 하루 수정하기`
+    },[])
+
     //id 와 diaryList가 변경될 때만 
     useEffect(()=>{
         if (diaryList.length  >=1 ) {

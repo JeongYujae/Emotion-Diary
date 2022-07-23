@@ -41,4 +41,5 @@ const DiaryItem = ({id,emotion,content,date}) => {
     )
 }
 
-export default DiaryItem
+// 텍스트랑 이미지 자체를 랜더링하지 말고 리스트만 재랜더링
+export default React.memo(DiaryItem)

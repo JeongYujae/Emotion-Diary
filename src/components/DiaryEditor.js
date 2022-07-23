@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import MyHeader from "./MyHeader"
@@ -28,10 +28,10 @@ const  DiaryEditor = ({isEdit, originData}) => {
     // context provider 의 값 가져다 쓰기
 
     const {onCreate, onEdit, onRemove} = useContext(DiaryDispatchContext)
-    const handleClickEmote = (emotion) => {
+    const handleClickEmote = useCallback((emotion) => {
         setEmotion(emotion)
 
-    }
+    }, [])
 
     const handleSubmit = () => {
         if (content.length <1){

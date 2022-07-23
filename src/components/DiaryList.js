@@ -18,7 +18,8 @@ const sortOptionList = [
 ]
 
 
-const ControlMenu = ({value, onChange, optionList}) => {
+// props 값들이 변경 X -> 랜더링 X
+const ControlMenu = React.memo(({value, onChange, optionList}) => {
 
 
     return(
@@ -32,7 +33,7 @@ const ControlMenu = ({value, onChange, optionList}) => {
 
         </select>
     )
-}
+})
 
 
 

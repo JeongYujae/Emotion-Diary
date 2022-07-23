@@ -15,6 +15,12 @@ const Diary = () => {
 
     const [data,setData]=useState();
 
+    //제목 바꾸기
+    useEffect(()=>{
+        const titleElement= document.getElementsByTagName('title')[0]
+        titleElement.innerHTML= `${id}번째 하루 기록하기`
+    },[])
+
     useEffect(()=>{
         if (diaryList.length >=1){
             const targetDiary= diaryList.find(
