@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import New from './pages/New';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
-import React, { useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 const reducer = (state,action)=>{
   let newState=[];
@@ -35,6 +35,8 @@ const reducer = (state,action)=>{
     default:
       return newState;
   }
+
+  localStorage.setItem('diary',JSON.stringify(newState))
   return newState;
   // newState를 반환해주어야 새로운 리스트에 반영이 된다
 }
@@ -42,38 +44,38 @@ const reducer = (state,action)=>{
 export const DiaryStateContext= React.createContext();
 export const DiaryDispatchContext= React.createContext();
 
-const dummyData= [
-  {
-    id:1,
-    emotion:3,
-    content:'1번 일기',
-    date: new Date().getTime()
-  },
 
-  {
-    id:2,
-    emotion:4,
-    content:'2번 일기',
-    date: new Date().getTime()+1
-  },
-  {id:3,
-  emotion:1,
-  content:'3번 일기',
-  date: new Date().getTime()+2
-  },
-  {id:4,
-    emotion:2,
-    content:'4번 일기',
-    date: new Date().getTime()+1000000000000
-
-  }
-]
 
 function App() {
+  
+  useEffect(()=>{
+    const localData= localStorage.getItem('diary');
+    if (localData) {
+      const diaryList= JSON.parse(localData).sort((a,b)=> parseInt(b.id)-parseInt(a.id));
 
-  const [data,dispatch] = useReducer(reducer,dummyData);
+      dataId.current= parseInt(diaryList[0].id) +1
 
-  const dataId = useRef(6);
+      dispatch({type: 'INIT', data:diaryList})
+
+    }
+    else {
+      
+    }
+
+  },[]);
+ 
+
+  // useEffect(()=>{
+  //   // 객체를 저장하는 방법
+  //   // localStorage.setItem("Key",JSON.stringify({value:30}))
+
+  //   // 객체를 불러올 때는 다 문자열 형태로 저장됨 parse 로 감싸면 객체를 살려서 올 수 있음
+  //   // localStorage
+  // })
+
+  const [data,dispatch] = useReducer(reducer,[]);
+
+  const dataId = useRef(0);
 
   //CREATE
 

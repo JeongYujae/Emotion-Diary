@@ -27,7 +27,7 @@ const  DiaryEditor = ({isEdit, originData}) => {
 
     // context provider 의 값 가져다 쓰기
 
-    const {onCreate, onEdit} = useContext(DiaryDispatchContext)
+    const {onCreate, onEdit, onRemove} = useContext(DiaryDispatchContext)
     const handleClickEmote = (emotion) => {
         setEmotion(emotion)
 
@@ -52,6 +52,13 @@ const  DiaryEditor = ({isEdit, originData}) => {
 
     }
 
+    const handleRemove = () => {
+        if ( window.confirm("정말 삭제하시겠습니까?")) {
+            onRemove(originData.id)
+            navigate('/',{replace:true})
+        }
+    }
+
     //isEdit 이 변경 될 때 -> 즉, 수정하러 왔을 때만 시행해준다
     //내용 그대로 받아주고 시작
     useEffect(()=>{
@@ -69,7 +76,10 @@ const  DiaryEditor = ({isEdit, originData}) => {
 
     return(
         <div className="DiaryEditor">
-            <MyHeader headText={isEdit? "수정하기" : "새로운 하루 기록하기"} leftChild={<MyButton text={'뒤로 가기'} onClick={()=>{navigate(-1)}}/>}/>
+            <MyHeader headText={isEdit? "수정하기" : "새로운 하루 기록하기"} 
+            leftChild={<MyButton text={'뒤로 가기'} onClick={()=>{navigate(-1)}}/>}
+            rightChild={ isEdit && <MyButton text={'삭제하기'} type={'negative'} onClick={handleRemove}/>}
+            />
 
             <div>
 
