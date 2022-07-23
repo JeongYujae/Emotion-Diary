@@ -18,7 +18,7 @@ const Diary = () => {
     //제목 바꾸기
     useEffect(()=>{
         const titleElement= document.getElementsByTagName('title')[0]
-        titleElement.innerHTML= `${id}번째 하루 기록하기`
+        titleElement.innerHTML= `parseInt(${id})+1번째 하루 기록하기`
     },[])
 
     useEffect(()=>{

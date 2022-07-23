@@ -21,7 +21,7 @@ const Edit = () => {
     //제목 바꾸기
     useEffect(()=>{
         const titleElement= document.getElementsByTagName('title')[0]
-        titleElement.innerHTML= `${id}번째 하루 수정하기`
+        titleElement.innerHTML= `parseInt(${id})+1번째 하루 수정하기`
     },[])
 
     //id 와 diaryList가 변경될 때만 

@@ -15,6 +15,11 @@ const Home = () => {
 
 
     useEffect(()=>{
+        const titleElement= document.getElementsByTagName('title')[0]
+        titleElement.innerHTML= `오늘의 나였던 내일의 나에게`
+    },[])
+
+    useEffect(()=>{
         if (diaryList.length >=1){
         const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(),1).getTime();
 
