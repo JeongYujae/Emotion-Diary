@@ -38,7 +38,6 @@ React.js
 <img src="https://user-images.githubusercontent.com/96777346/180734654-88edbc76-55ef-4d31-a327-6e1f3dbe80ce.PNG">
 <br/>
 
-#New diary form
 <img src="https://user-images.githubusercontent.com/96777346/180734657-b314843e-67a7-4c8a-bac0-17e9eabcc689.PNG">
 <br/>
 
